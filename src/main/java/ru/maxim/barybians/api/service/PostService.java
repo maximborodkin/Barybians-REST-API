@@ -1,0 +1,13 @@
+package ru.maxim.barybians.api.service;
+
+import ru.maxim.barybians.api.model.Post;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface PostService {
+
+    Optional<Post> findById(Long id);
+
+    List<Post> findByUserId(Long id);
+}

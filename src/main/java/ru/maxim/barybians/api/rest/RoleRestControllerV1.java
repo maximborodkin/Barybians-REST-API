@@ -1,0 +1,30 @@
+package ru.maxim.barybians.api.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.maxim.barybians.api.dto.RoleDto;
+import ru.maxim.barybians.api.service.RoleService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/v1/")
+public class RoleRestControllerV1 {
+
+    @Autowired
+    RoleService roleService;
+
+    @GetMapping(value = "roles")
+    ResponseEntity<List<RoleDto>> getAll(){
+        List<RoleDto> result = new ArrayList<>();
+        roleService.getAll().forEach(role ->
+            result.add(RoleDto.fromRole(role))
+        );
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+}
