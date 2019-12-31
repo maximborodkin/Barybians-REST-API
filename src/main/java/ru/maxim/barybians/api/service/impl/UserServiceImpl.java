@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        Role userRole = roleRepository.findByName("unvalidated");
+        Role userRole = roleRepository.findByName("unverified");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(userRole);
 

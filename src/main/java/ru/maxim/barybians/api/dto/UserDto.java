@@ -1,6 +1,7 @@
 package ru.maxim.barybians.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import ru.maxim.barybians.api.model.User;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class UserDto {
@@ -53,7 +55,7 @@ public class UserDto {
             userDto.setRoles(roles);
         }
 
-        if (hasPosts){
+        if (hasPosts && user.getPosts() != null){
             List<PostDto> posts = new ArrayList<>();
             user.getPosts().forEach(post -> posts.add(PostDto.fromPost(post, false, false)));
             Collections.reverse(posts);

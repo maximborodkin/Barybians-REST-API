@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.maxim.barybians.api.dto.PostDto;
+import ru.maxim.barybians.api.model.Post;
 import ru.maxim.barybians.api.service.PostService;
 
 @RestController
@@ -15,10 +16,16 @@ import ru.maxim.barybians.api.service.PostService;
 public class PostRestControllerV1 {
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
     @GetMapping(value = "posts/{id}")
-    public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") Long id){
-        return new ResponseEntity(PostDto.fromPost(postService.findById(id).get(), true, true), HttpStatus.OK);
+    public ResponseEntity getPostById(@PathVariable(name = "id") Long id){
+        Post post;
+        if (postService.findById(id).isPresent()){
+            PostDto postDto = PostDto.fromPost(postService.findById(id).get(), true, true);
+            return new ResponseEntity<>(postDto, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

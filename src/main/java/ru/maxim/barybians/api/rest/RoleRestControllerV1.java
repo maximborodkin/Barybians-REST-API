@@ -17,10 +17,10 @@ import java.util.List;
 public class RoleRestControllerV1 {
 
     @Autowired
-    RoleService roleService;
+    private RoleService roleService;
 
     @GetMapping(value = "roles")
-    ResponseEntity<List<RoleDto>> getAll(){
+    public ResponseEntity getAll(){
         List<RoleDto> result = new ArrayList<>();
         roleService.getAll().forEach(role ->
             result.add(RoleDto.fromRole(role))
