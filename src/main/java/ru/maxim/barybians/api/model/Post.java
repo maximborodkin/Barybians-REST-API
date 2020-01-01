@@ -1,6 +1,7 @@
 package ru.maxim.barybians.api.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,9 +28,12 @@ public class Post extends BaseEntity {
     @Column(name = "edited")
     private int edited;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "likedposts",
             joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private List<User> likes;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 }

@@ -20,9 +20,8 @@ public class PostRestControllerV1 {
 
     @GetMapping(value = "posts/{id}")
     public ResponseEntity getPostById(@PathVariable(name = "id") Long id){
-        Post post;
         if (postService.findById(id).isPresent()){
-            PostDto postDto = PostDto.fromPost(postService.findById(id).get(), true, true);
+            PostDto postDto = PostDto.fromPost(postService.findById(id).get(), true, true, true, true, true);
             return new ResponseEntity<>(postDto, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

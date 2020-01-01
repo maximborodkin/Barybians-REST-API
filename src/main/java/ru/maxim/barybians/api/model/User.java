@@ -44,8 +44,17 @@ public class User extends BaseEntity {
     @ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY)
     private List<Post> likes;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    private List<Message> sendedMessages;
+
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    private List<Message> receivedMessages;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     public String concatToSearchString(){
         return username.toLowerCase() + firstName.toLowerCase() + lastName.toLowerCase();

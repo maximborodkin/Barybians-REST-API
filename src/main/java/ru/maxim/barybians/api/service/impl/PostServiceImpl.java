@@ -15,7 +15,7 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
     @Override
     public Optional<Post> findById(Long id) {

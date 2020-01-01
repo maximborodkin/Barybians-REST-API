@@ -35,7 +35,7 @@ public class UserRestControllerV1 {
         if (user == null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }else {
-            UserDto result = UserDto.fromUser(user, true, true);
+            UserDto result = UserDto.fromUser(user, true, true, true);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
     }
@@ -65,7 +65,7 @@ public class UserRestControllerV1 {
         List<UserDto> result = new ArrayList<>();
         users.forEach(user ->{
             if (user.concatToSearchString().contains(search.toLowerCase())){
-                result.add(UserDto.fromUser(user, true, false));
+                result.add(UserDto.fromUser(user, false, false, false));
             }
         });
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -79,7 +79,7 @@ public class UserRestControllerV1 {
         }else {
             List<UserDto> result = new ArrayList<>();
             users.forEach(user ->
-                result.add(UserDto.fromUser(user, false, false))
+                result.add(UserDto.fromUser(user, false, false, false))
             );
             return new ResponseEntity<>(result, HttpStatus.OK);
         }

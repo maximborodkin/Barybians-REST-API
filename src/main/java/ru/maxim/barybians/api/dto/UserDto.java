@@ -38,13 +38,13 @@ public class UserDto {
         return user;
     }
 
-    public static UserDto fromUser(User user, boolean hasRoles, boolean hasPosts){
+    public static UserDto fromUser(User user, boolean hasRoles, boolean hasPosts, boolean hasComments){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setPhoto(user.getPhotoUrl());
+        userDto.setPhoto("https://barybians.site/avatars/"+user.getPhotoUrl());
         userDto.setStatus(user.getStatus());
         userDto.setSex(user.getSex());
         userDto.setBirthDate(user.getBirthDate().getTime());
@@ -57,7 +57,7 @@ public class UserDto {
 
         if (hasPosts && user.getPosts() != null){
             List<PostDto> posts = new ArrayList<>();
-            user.getPosts().forEach(post -> posts.add(PostDto.fromPost(post, false, false)));
+            user.getPosts().forEach(post -> posts.add(PostDto.fromPost(post, false, false, hasComments, true, false)));
             Collections.reverse(posts);
             userDto.setPosts(posts);
         }

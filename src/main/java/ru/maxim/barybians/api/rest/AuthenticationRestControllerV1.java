@@ -54,7 +54,7 @@ public class AuthenticationRestControllerV1 {
             String token = jwtTokenProvider.createToken(username, user.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
-            response.put("user", UserDto.fromUser(userService.findByUsername(username), true, true));
+            response.put("user", UserDto.fromUser(userService.findByUsername(username), true, true, true));
             response.put("token", token);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
