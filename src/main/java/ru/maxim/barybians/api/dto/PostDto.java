@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import ru.maxim.barybians.api.model.Comment;
 import ru.maxim.barybians.api.model.Post;
+import ru.maxim.barybians.api.model.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,11 +29,17 @@ public class PostDto implements Comparable<PostDto>{
     public Post toPost(){
         Post post = new Post();
         post.setId(id);
+        post.setUser(user.toUser());
         post.setTitle(title);
         post.setText(text);
         post.setTime(new Date(time));
         post.setEdited(edited);
-
+        List<User> postLikedUsers = new ArrayList<>();
+        likedUsers.forEach(userDto -> postLikedUsers.add(userDto.toUser()));
+        post.setLikes(postLikedUsers);
+        List<Comment> postComments = new ArrayList<>();
+        comments.forEach(commentDto -> postComments.add(commentDto.toComment()));
+        post.setComments(postComments);
         return post;
     }
 
@@ -46,7 +53,11 @@ public class PostDto implements Comparable<PostDto>{
         postDto.setText(post.getText());
         postDto.setTime(post.getTime().getTime());
         postDto.setEdited(post.getEdited());
-        postDto.setLikesCount(post.getLikes().size());
+        if (post.getLikes() == null){
+            postDto.setLikesCount(0);
+        }else {
+            postDto.setLikesCount(post.getLikes().size());
+        }
         if (hasLikedUsers) {
             List<UserDto> likedUsers = new ArrayList<>();
             post.getLikes().forEach(user -> likedUsers.add(UserDto.fromUser(user, false, false, false)));

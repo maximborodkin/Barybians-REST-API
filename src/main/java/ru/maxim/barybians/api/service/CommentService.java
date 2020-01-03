@@ -10,4 +10,10 @@ public interface CommentService {
     Optional<Comment> findById(Long id);
 
     List<Comment> findCommentsByPostId(Long id);
+
+    Comment addComment(Comment comment);
+
+    Comment editComment(Comment comment);
+
+    boolean deleteComment(long id);
 }

@@ -19,6 +19,7 @@ public class RoleRestControllerV1 {
     @Autowired
     private RoleService roleService;
 
+    // Get roles list
     @GetMapping(value = "roles")
     public ResponseEntity getAll(){
         List<RoleDto> result = new ArrayList<>();

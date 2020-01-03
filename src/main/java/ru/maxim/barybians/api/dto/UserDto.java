@@ -3,10 +3,13 @@ package ru.maxim.barybians.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import ru.maxim.barybians.api.model.Post;
+import ru.maxim.barybians.api.model.Role;
 import ru.maxim.barybians.api.model.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -22,7 +25,8 @@ public class UserDto {
     private String status;
     private long birthDate;
     private int sex;
-    private List<Long> roles;
+    private long lastVisit;
+    private List<RoleDto> roles;
     private List<PostDto> posts;
 
     public User toUser(){
@@ -33,8 +37,15 @@ public class UserDto {
         user.setLastName(lastName);
         user.setPhotoUrl(photo);
         user.setStatus(status);
+        user.setBirthDate(new Date(birthDate));
         user.setSex(sex);
-
+        user.setLastVisit(new Date(lastVisit));
+        List<Role> userRoles = new ArrayList<>();
+        roles.forEach(roleDto -> userRoles.add(roleDto.toRole()));
+        user.setRoles(userRoles);
+        List<Post> userPosts = new ArrayList<>();
+        posts.forEach(postDto -> userPosts.add(postDto.toPost()));
+        user.setPosts(userPosts);
         return user;
     }
 
@@ -50,8 +61,8 @@ public class UserDto {
         userDto.setBirthDate(user.getBirthDate().getTime());
 
         if (hasRoles){
-            List<Long> roles = new ArrayList<>();
-            user.getRoles().forEach(role -> roles.add(role.getId()));
+            List<RoleDto> roles = new ArrayList<>();
+            user.getRoles().forEach(role -> roles.add(RoleDto.fromRole(role)));
             userDto.setRoles(roles);
         }
 

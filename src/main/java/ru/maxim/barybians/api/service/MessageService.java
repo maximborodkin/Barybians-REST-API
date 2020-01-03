@@ -8,7 +8,15 @@ import java.util.List;
 
 public interface MessageService  {
 
-    List<Message> getDialog(Long firstUserId, Long secondUserId);
+    List<Message> getDialog(long firstUserId, long secondUserId);
 
-    List<Pair<User, Message>> getDialogPreviews(Long userId);
+    List<Pair<User, Message>> getDialogPreviews(long userId);
+
+    Message saveMessage(Message message);
+
+    boolean deleteMessage(long id);
+
+    Message editMessage(Message message);
+
+    Message findById(long id);
 }

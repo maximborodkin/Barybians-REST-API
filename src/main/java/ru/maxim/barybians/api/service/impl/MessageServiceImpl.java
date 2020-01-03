@@ -23,7 +23,7 @@ public class MessageServiceImpl implements MessageService {
     private UserRepository userRepository;
 
     @Override
-    public List<Message> getDialog(Long firstUserId, Long secondUserId) {
+    public List<Message> getDialog(long firstUserId, long secondUserId) {
         List<Message> dialog = new ArrayList<>();
         List<Message> messages = messageRepository.findAll();
         messages.forEach(message -> {
@@ -32,6 +32,8 @@ public class MessageServiceImpl implements MessageService {
                     message.getReceiver().getId() == secondUserId &&
                     message.getSender().getId() == firstUserId){
                 dialog.add(message);
+                message.setUnread(0);
+                messageRepository.save(message);
             }
         });
         Collections.reverse(messages);
@@ -39,13 +41,15 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Pair<User, Message>> getDialogPreviews(Long userId) {
+    public List<Pair<User, Message>> getDialogPreviews(long userId) {
         User user;
         if (userRepository.findById(userId).isPresent()){
             user = userRepository.findById(userId).get();
         }else {
             return null;
         }
+        user.setLastVisit(new Date());
+        userRepository.save(user);
         List<Message> allMessages = messageRepository.findAll();
         List<Message> allUserMessages = new ArrayList<>();
         allMessages.forEach(message -> {
@@ -80,5 +84,46 @@ public class MessageServiceImpl implements MessageService {
             messagesPreviews.add(new Pair<>(interlocutor, interlocutorMessages.get(interlocutorMessages.size()-1)));
         });
         return messagesPreviews;
+    }
+
+
+
+    @Override
+    public Message saveMessage(Message message) {
+        User user = message.getSender();
+        user.setLastVisit(new Date());
+        userRepository.save(user);
+        return messageRepository.save(message);
+    }
+
+    @Override
+    public boolean deleteMessage(long id) {
+        if (messageRepository.findById(id).isPresent()){
+            User user = messageRepository.findById(id).get().getSender();
+            user.setLastVisit(new Date());
+            userRepository.save(user);
+            messageRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Message editMessage(Message message) {
+        if (messageRepository.findById(message.getId()).isPresent()){
+            User user = message.getSender();
+            user.setLastVisit(new Date());
+            userRepository.save(user);
+            return messageRepository.save(message);
+        }
+        return null;
+    }
+
+    @Override
+    public Message findById(long id) {
+        if (messageRepository.findById(id).isPresent()){
+            return messageRepository.findById(id).get();
+        }
+        return null;
     }
 }

@@ -11,6 +11,7 @@ import ru.maxim.barybians.api.repository.UserRepository;
 import ru.maxim.barybians.api.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
-
+        user.setLastVisit(new Date());
         return userRepository.save(user);
     }
 

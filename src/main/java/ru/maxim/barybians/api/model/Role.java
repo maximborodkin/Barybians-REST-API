@@ -1,8 +1,6 @@
 package ru.maxim.barybians.api.model;
 
-
 import lombok.Data;
-
 import javax.persistence.*;
 import java.util.List;
 

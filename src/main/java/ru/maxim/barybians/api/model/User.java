@@ -35,6 +35,9 @@ public class User extends BaseEntity {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "last_visit")
+    private Date lastVisit;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
     joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

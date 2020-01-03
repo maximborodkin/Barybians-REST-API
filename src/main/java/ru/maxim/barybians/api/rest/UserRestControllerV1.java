@@ -24,6 +24,10 @@ public class UserRestControllerV1 {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
+    // Get user by id or username
     @GetMapping(value = "users/{identifier}")
     public ResponseEntity getUser(@PathVariable(name = "identifier") String identifier){
         User user;
@@ -40,8 +44,10 @@ public class UserRestControllerV1 {
         }
     }
 
+    // Delete user by id or username
+    @Deprecated
     @DeleteMapping(value = "users/{identifier}")
-    public ResponseEntity deleteUser(@PathVariable(name = "identifier") String identifier){
+    public ResponseEntity deleteUser(@PathVariable(name = "identifier") String identifier, @RequestHeader("Authorization") String token){
         User user;
         try {
             user = userService.findById(Long.parseLong(identifier));
@@ -50,12 +56,15 @@ public class UserRestControllerV1 {
         }
         if (user == null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }else {
-            userService.delete(user.getId());
-            return new ResponseEntity<>(HttpStatus.OK);
         }
+        if (tokenProvider.getUsername(token.trim().substring(7)).equals(user.getUsername())){
+            return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
+        }
+        userService.delete(user.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // Get users list by search parameter
     @GetMapping(value = "users", params = "search")
     public ResponseEntity searchUsers(@RequestParam(value = "search") String search){
         List<User> users = userService.getAll();
@@ -71,6 +80,7 @@ public class UserRestControllerV1 {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    // Get list of all users
     @GetMapping(value = "users")
     public ResponseEntity getAllUsers(){
         List<User> users = userService.getAll();

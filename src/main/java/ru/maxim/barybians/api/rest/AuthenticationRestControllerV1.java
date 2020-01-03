@@ -40,6 +40,7 @@ public class AuthenticationRestControllerV1 {
         this.userService = userService;
     }
 
+    // Get full UserDto object with token and authenticate user
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
@@ -63,6 +64,7 @@ public class AuthenticationRestControllerV1 {
         }
     }
 
+    // Get full UserDto object with token and register user
     @PostMapping(value = "register")
     public ResponseEntity registerUser(@RequestBody RegisterRequestDto requestDto){
         String firstName = requestDto.getFirstName();
