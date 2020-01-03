@@ -1,6 +1,5 @@
 package ru.maxim.barybians.api.rest;
 
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import ru.maxim.barybians.api.dto.UserDto;
 import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;
 import ru.maxim.barybians.api.service.UserService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +19,14 @@ public class UserRestControllerV1 {
     @Value("${jwt.token.secret}")
     private String secret;
 
-    @Autowired
     private UserService userService;
+    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private JwtTokenProvider tokenProvider;
+    public UserRestControllerV1(UserService userService, JwtTokenProvider tokenProvider) {
+        this.userService = userService;
+        this.tokenProvider = tokenProvider;
+    }
 
     // Get user by id or username
     @GetMapping(value = "users/{identifier}")

@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.maxim.barybians.api.model.Role;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public class JwtTokenProvider {
 
     @Value("${jwt.token.expired}")
     private long validityTime;
-
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -88,7 +86,7 @@ public class JwtTokenProvider {
             }
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticatonException("JWT token is expired or invalid");
+            throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
     }
 

@@ -6,7 +6,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.maxim.barybians.api.model.Message;
 import ru.maxim.barybians.api.service.UserService;
-
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

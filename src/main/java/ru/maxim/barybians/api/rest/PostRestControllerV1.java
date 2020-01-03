@@ -11,7 +11,6 @@ import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;
 import ru.maxim.barybians.api.service.PostService;
 import ru.maxim.barybians.api.service.UserService;
-
 import java.util.Date;
 
 @RestController

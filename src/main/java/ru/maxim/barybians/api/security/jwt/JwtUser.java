@@ -3,7 +3,6 @@ package ru.maxim.barybians.api.security.jwt;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
 public class JwtUser implements UserDetails {

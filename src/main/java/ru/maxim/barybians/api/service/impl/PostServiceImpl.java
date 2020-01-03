@@ -8,7 +8,6 @@ import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.repository.PostRepository;
 import ru.maxim.barybians.api.repository.UserRepository;
 import ru.maxim.barybians.api.service.PostService;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -17,11 +16,14 @@ import java.util.Optional;
 @Slf4j
 public class PostServiceImpl implements PostService {
 
-    @Autowired
     private PostRepository postRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
+        this.postRepository = postRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Optional<Post> findById(Long id) {

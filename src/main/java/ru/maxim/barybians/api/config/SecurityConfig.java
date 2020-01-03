@@ -10,7 +10,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import ru.maxim.barybians.api.security.jwt.JwtConfigurer;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;
 
-
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

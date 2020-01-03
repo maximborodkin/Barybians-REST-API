@@ -9,7 +9,6 @@ import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.repository.RoleRepository;
 import ru.maxim.barybians.api.repository.UserRepository;
 import ru.maxim.barybians.api.service.UserService;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

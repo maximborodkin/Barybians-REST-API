@@ -6,7 +6,6 @@ import lombok.Data;
 import ru.maxim.barybians.api.model.Comment;
 import ru.maxim.barybians.api.model.Post;
 import ru.maxim.barybians.api.model.User;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

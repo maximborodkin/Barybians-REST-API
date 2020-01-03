@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class RegisterRequestDto {
+
     private String firstName;
     private String lastName;
     private String status = "Я - Барыбинец!";

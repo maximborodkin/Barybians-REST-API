@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import ru.maxim.barybians.api.model.Message;
 import ru.maxim.barybians.api.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

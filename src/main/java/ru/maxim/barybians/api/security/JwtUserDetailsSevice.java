@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException ;
 import org.springframework.stereotype.Service;
 import ru.maxim.barybians.api.model.User;
-import ru.maxim.barybians.api.security.jwt.JwtUser;
 import ru.maxim.barybians.api.security.jwt.JwtUserFactory;
 import ru.maxim.barybians.api.service.UserService;
 

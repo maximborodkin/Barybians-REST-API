@@ -1,7 +1,6 @@
 package ru.maxim.barybians.api.dto;
 
 import lombok.Data;
-
 import java.util.Date;
 
 @Data

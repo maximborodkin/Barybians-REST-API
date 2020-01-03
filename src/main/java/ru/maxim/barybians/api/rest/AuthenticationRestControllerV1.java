@@ -18,7 +18,6 @@ import ru.maxim.barybians.api.dto.UserDto;
 import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;
 import ru.maxim.barybians.api.service.UserService;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +27,7 @@ import java.util.Map;
 public class AuthenticationRestControllerV1 {
 
     private final AuthenticationManager authenticationManager;
-
     private final JwtTokenProvider jwtTokenProvider;
-
     private final UserService userService;
 
     @Autowired

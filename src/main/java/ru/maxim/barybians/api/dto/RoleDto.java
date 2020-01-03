@@ -7,10 +7,9 @@ import ru.maxim.barybians.api.model.Role;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class RoleDto {
+
     private Long id;
     private String name;
-
-    public RoleDto() {}
 
     public Role toRole(){
         Role role = new Role();

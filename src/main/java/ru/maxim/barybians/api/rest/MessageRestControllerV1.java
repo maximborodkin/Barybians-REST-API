@@ -12,7 +12,6 @@ import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;
 import ru.maxim.barybians.api.service.MessageService;
 import ru.maxim.barybians.api.service.UserService;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,14 +20,16 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/")
 public class MessageRestControllerV1 {
 
-    @Autowired
     private MessageService messageService;
-
-    @Autowired
     private UserService userService;
+    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private JwtTokenProvider tokenProvider;
+    public MessageRestControllerV1(MessageService messageService, UserService userService, JwtTokenProvider tokenProvider) {
+        this.messageService = messageService;
+        this.userService = userService;
+        this.tokenProvider = tokenProvider;
+    }
 
     // Get all messages between two users
     @GetMapping(value = "dialogs")

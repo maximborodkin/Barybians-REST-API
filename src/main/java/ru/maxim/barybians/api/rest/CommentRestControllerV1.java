@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.maxim.barybians.api.dto.CommentDto;
 import ru.maxim.barybians.api.dto.CommentRequestDto;
-import ru.maxim.barybians.api.dto.PostRequestDto;
 import ru.maxim.barybians.api.model.Comment;
 import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;

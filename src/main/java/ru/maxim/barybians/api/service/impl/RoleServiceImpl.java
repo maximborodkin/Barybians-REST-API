@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import ru.maxim.barybians.api.model.Role;
 import ru.maxim.barybians.api.repository.RoleRepository;
 import ru.maxim.barybians.api.service.RoleService;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +13,12 @@ import java.util.Optional;
 @Slf4j
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    public RoleServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public List<Role> getAll() {

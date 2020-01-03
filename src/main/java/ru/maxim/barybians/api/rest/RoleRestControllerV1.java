@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.maxim.barybians.api.dto.RoleDto;
 import ru.maxim.barybians.api.service.RoleService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,12 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/")
 public class RoleRestControllerV1 {
 
-    @Autowired
     private RoleService roleService;
+
+    @Autowired
+    public RoleRestControllerV1(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     // Get roles list
     @GetMapping(value = "roles")

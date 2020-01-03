@@ -1,8 +1,6 @@
 package ru.maxim.barybians.api.service;
 
 import ru.maxim.barybians.api.model.Post;
-import ru.maxim.barybians.api.model.User;
-
 import java.util.List;
 import java.util.Optional;
 

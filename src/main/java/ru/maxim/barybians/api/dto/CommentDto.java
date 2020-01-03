@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import ru.maxim.barybians.api.model.Comment;
-
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

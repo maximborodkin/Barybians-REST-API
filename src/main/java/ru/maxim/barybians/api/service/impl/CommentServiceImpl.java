@@ -8,18 +8,20 @@ import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.repository.CommentRepository;
 import ru.maxim.barybians.api.repository.UserRepository;
 import ru.maxim.barybians.api.service.CommentService;
-
 import java.util.*;
 
 @Service
 @Slf4j
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
     private CommentRepository commentRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public CommentServiceImpl(CommentRepository commentRepository, UserRepository userRepository) {
+        this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Optional<Comment> findById(Long id) {
