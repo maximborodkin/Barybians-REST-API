@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.maxim.barybians.api.model.Message;
 import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.repository.MessageRepository;
@@ -92,6 +93,7 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
+    @Transactional
     public Message saveMessage(Message message) {
         User user = message.getSender();
         user.setLastVisit(new Date());
@@ -100,6 +102,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public boolean deleteMessage(long id) {
         if (messageRepository.findById(id).isPresent()){
             User user = messageRepository.findById(id).get().getSender();
@@ -112,6 +115,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public Message editMessage(Message message) {
         if (messageRepository.findById(message.getId()).isPresent()){
             User user = message.getSender();

@@ -48,7 +48,8 @@ public class UserRestControllerV1 {
     // Delete user by id or username
     @Deprecated
     @DeleteMapping(value = "users/{identifier}")
-    public ResponseEntity deleteUser(@PathVariable(name = "identifier") String identifier, @RequestHeader("Authorization") String token){
+    public ResponseEntity deleteUser(@PathVariable(name = "identifier") String identifier,
+                                     @RequestHeader("Authorization") String token){
         User user;
         try {
             user = userService.findById(Long.parseLong(identifier));

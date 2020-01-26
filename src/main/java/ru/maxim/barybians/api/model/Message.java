@@ -30,4 +30,13 @@ public class Message extends BaseEntity implements Comparable<Message>{
     public int compareTo(Message other) {
         return Long.compare(time.getTime(), other.getTime().getTime());
     }
+
+    public String toJsonString() {
+        return "{\"id\":" + getId()
+                + ",\"senderId\":" + getSender().getId()
+                + ",\"receiverId\":" + getReceiver().getId()
+                + ",\"text\":\"" + getText() + "\""
+                + ",\"time\":" + getTime().getTime()
+                +"}";
+    }
 }

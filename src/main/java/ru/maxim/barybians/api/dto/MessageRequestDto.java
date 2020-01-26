@@ -8,5 +8,4 @@ public class MessageRequestDto {
 
     private long receiverId;
     private String text;
-    private Long time = new Date().getTime();
 }

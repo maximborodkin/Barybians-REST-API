@@ -1,0 +1,23 @@
+#header-title{
+	font-size: 22pt;
+	color: #5938C6;
+	text-align: center;
+	text-shadow: 1px 1px 2px black, 0 0 1em red;
+}
+
+#connection-buttons-group{
+	text-align: center;
+	margin-top: 40pt;
+}
+
+.block-title{
+	margin-left: 16pt;
+	font-size: 18pt;
+	color: #3F3F3F;
+	font-family: sans-serif;
+}
+
+#message-input, #request-messages, #messages-history{
+	margin-left: 16pt;
+	margin-right: 6pt;
+}

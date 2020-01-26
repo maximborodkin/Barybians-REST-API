@@ -45,7 +45,8 @@ public class CommentRestControllerV1 {
 
     // Create comment
     @PostMapping(value = "comments")
-    public ResponseEntity addComment(@RequestBody CommentRequestDto commentRequest, @RequestHeader("Authorization") String token){
+    public ResponseEntity addComment(@RequestBody CommentRequestDto commentRequest,
+                                     @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User user = userService.findByUsername(username);
         if (user == null || !user.getUsername().equals(username)){
@@ -53,7 +54,7 @@ public class CommentRestControllerV1 {
         }
         long postId = commentRequest.getPostId();
         String text = commentRequest.getText();
-        Date time = new Date(commentRequest.getTime());
+        Date time = new Date();
         if (!postService.findById(postId).isPresent()){
             return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
         }
@@ -75,7 +76,9 @@ public class CommentRestControllerV1 {
 
     // Edit comment
     @PutMapping(value = "comments/{id}")
-    public ResponseEntity editComment(@PathVariable(name = "id") long commentId, @RequestBody CommentRequestDto commentRequest, @RequestHeader("Authorization") String token){
+    public ResponseEntity editComment(@PathVariable(name = "id") long commentId,
+                                      @RequestBody CommentRequestDto commentRequest,
+                                      @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User user = userService.findByUsername(username);
         if (user == null || !user.getUsername().equals(username)){
@@ -83,7 +86,7 @@ public class CommentRestControllerV1 {
         }
         long postId = commentRequest.getPostId();
         String text = commentRequest.getText();
-        Date time = new Date(commentRequest.getTime());
+        Date time = new Date();
         if (!postService.findById(postId).isPresent()){
             return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
         }
@@ -112,7 +115,8 @@ public class CommentRestControllerV1 {
 
     // Delete comment
     @DeleteMapping(value = "comments/{id}")
-    public ResponseEntity deleteComment(@PathVariable(name = "id") long commentId, @RequestHeader("Authorization") String token){
+    public ResponseEntity deleteComment(@PathVariable(name = "id") long commentId,
+                                        @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User user = userService.findByUsername(username);
         if (user == null || !user.getUsername().equals(username)){

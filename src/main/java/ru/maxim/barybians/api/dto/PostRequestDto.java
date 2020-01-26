@@ -8,5 +8,4 @@ public class PostRequestDto {
 
     private String title;
     private String text;
-    private long time = new Date().getTime();
 }

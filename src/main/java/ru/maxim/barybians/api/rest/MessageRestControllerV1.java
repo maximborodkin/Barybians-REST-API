@@ -33,7 +33,9 @@ public class MessageRestControllerV1 {
 
     // Get all messages between two users
     @GetMapping(value = "dialogs")
-    public ResponseEntity getDialog(@RequestParam(name = "firstUser") Long firstUserId, @RequestParam(name = "secondUser") Long secondUserId, @RequestHeader("Authorization") String token){
+    public ResponseEntity getDialog(@RequestParam(name = "firstUser") Long firstUserId,
+                                    @RequestParam(name = "secondUser") Long secondUserId,
+                                    @RequestHeader("Authorization") String token){
         if (firstUserId == null || secondUserId == null){
             return new ResponseEntity<>("Two parameters required", HttpStatus.BAD_REQUEST);
         }
@@ -61,7 +63,8 @@ public class MessageRestControllerV1 {
 
     // Get dialogs previews
     @GetMapping(value = "dialogs/{userId}")
-    public ResponseEntity getDialofsPreviews(@PathVariable(name = "userId") Long id, @RequestHeader("Authorization") String token){
+    public ResponseEntity getDialofsPreviews(@PathVariable(name = "userId") Long id,
+                                             @RequestHeader("Authorization") String token){
         User user = userService.findById(id);
         String username = tokenProvider.getUsername(token.trim().substring(7));
         if (!user.getUsername().equals(username)){
@@ -76,13 +79,14 @@ public class MessageRestControllerV1 {
 
     // Create message
     @PostMapping(value = "messages")
-    public ResponseEntity sendMessage(@RequestBody MessageRequestDto messageRequest, @RequestHeader("Authorization") String token){
+    public ResponseEntity sendMessage(@RequestBody MessageRequestDto messageRequest,
+                                      @RequestHeader("Authorization") String token){
 
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User sender = userService.findByUsername(username);
         User receiver = userService.findById(messageRequest.getReceiverId());
         String text = messageRequest.getText();
-        Date time = new Date(messageRequest.getTime());
+        Date time = new Date();
 
         if (sender == null || receiver == null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
@@ -115,7 +119,7 @@ public class MessageRestControllerV1 {
         User sender = userService.findByUsername(username);
         User receiver = userService.findById(messageRequest.getReceiverId());
         String text = messageRequest.getText();
-        Date time = new Date(messageRequest.getTime());
+        Date time = new Date();
 
         if (sender == null || receiver == null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);

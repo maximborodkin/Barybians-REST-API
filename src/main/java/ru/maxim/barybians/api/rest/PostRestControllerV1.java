@@ -41,7 +41,8 @@ public class PostRestControllerV1 {
 
     // Create post
     @PostMapping(value = "posts")
-    public ResponseEntity addPost(@RequestBody PostRequestDto postRequest, @RequestHeader("Authorization") String token){
+    public ResponseEntity addPost(@RequestBody PostRequestDto postRequest,
+                                  @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User user = userService.findByUsername(username);
         if (user == null || !user.getUsername().equals(username)){
@@ -49,7 +50,7 @@ public class PostRestControllerV1 {
         }
         String title = postRequest.getTitle();
         String text = postRequest.getText();
-        Date time = new Date(postRequest.getTime());
+        Date time = new Date();
         if (title == null || title.isEmpty() || text == null || text.isEmpty() || time.after(new Date())){
             return new ResponseEntity<>("Invalid request data", HttpStatus.BAD_REQUEST);
         }
@@ -69,7 +70,9 @@ public class PostRestControllerV1 {
 
     // Edit post by id
     @PutMapping(value = "posts/{id}")
-    public ResponseEntity addPost(@PathVariable(name = "id") Long id, @RequestBody PostRequestDto postRequest, @RequestHeader("Authorization") String token){
+    public ResponseEntity addPost(@PathVariable(name = "id") Long id,
+                                  @RequestBody PostRequestDto postRequest,
+                                  @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User user = userService.findByUsername(username);
         if (user == null || !user.getUsername().equals(username)){
@@ -80,7 +83,7 @@ public class PostRestControllerV1 {
         }
         String title = postRequest.getTitle();
         String text = postRequest.getText();
-        Date time = new Date(postRequest.getTime());
+        Date time = new Date();
         if (title == null || title.isEmpty() || text == null || text.isEmpty() || time.after(new Date())){
             return new ResponseEntity<>("Invalid request data", HttpStatus.BAD_REQUEST);
         }
@@ -99,7 +102,8 @@ public class PostRestControllerV1 {
 
     // Delete post by id
     @DeleteMapping(value = "posts/{id}")
-    public ResponseEntity addPost(@PathVariable(name = "id") Long id, @RequestHeader("Authorization") String token){
+    public ResponseEntity addPost(@PathVariable(name = "id") Long id,
+                                  @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User user = userService.findByUsername(username);
         if (user == null || !user.getUsername().equals(username)){

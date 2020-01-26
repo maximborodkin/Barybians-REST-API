@@ -8,5 +8,4 @@ public class CommentRequestDto {
 
     private long postId;
     private String text;
-    private long time = new Date().getTime();
 }
