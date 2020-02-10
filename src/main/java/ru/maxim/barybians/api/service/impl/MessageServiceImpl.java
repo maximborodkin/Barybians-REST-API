@@ -17,14 +17,11 @@ import java.util.*;
 @Slf4j
 public class MessageServiceImpl implements MessageService {
 
+    @Autowired
     private MessageRepository messageRepository;
-    private UserRepository userRepository;
 
     @Autowired
-    public MessageServiceImpl(MessageRepository messageRepository, UserRepository userRepository) {
-        this.messageRepository = messageRepository;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public List<Message> getDialog(long firstUserId, long secondUserId) {

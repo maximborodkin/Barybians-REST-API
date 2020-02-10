@@ -15,12 +15,8 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/")
 public class RoleRestControllerV1 {
 
-    private RoleService roleService;
-
     @Autowired
-    public RoleRestControllerV1(RoleService roleService) {
-        this.roleService = roleService;
-    }
+    private RoleService roleService;
 
     // Get roles list
     @GetMapping(value = "roles")

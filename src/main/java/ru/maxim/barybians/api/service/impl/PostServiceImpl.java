@@ -16,14 +16,11 @@ import java.util.Optional;
 @Slf4j
 public class PostServiceImpl implements PostService {
 
+    @Autowired
     private PostRepository postRepository;
-    private UserRepository userRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public Optional<Post> findById(Long id) {

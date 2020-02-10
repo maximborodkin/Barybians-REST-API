@@ -14,14 +14,11 @@ import java.util.*;
 @Slf4j
 public class CommentServiceImpl implements CommentService {
 
+    @Autowired
     private CommentRepository commentRepository;
-    private UserRepository userRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, UserRepository userRepository) {
-        this.commentRepository = commentRepository;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public Optional<Comment> findById(Long id) {

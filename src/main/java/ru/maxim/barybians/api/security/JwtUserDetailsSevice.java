@@ -14,12 +14,8 @@ import ru.maxim.barybians.api.service.UserService;
 @Slf4j
 public class JwtUserDetailsSevice implements UserDetailsService {
 
-    private final UserService userService;
-
     @Autowired
-    public JwtUserDetailsSevice(UserService userService){
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

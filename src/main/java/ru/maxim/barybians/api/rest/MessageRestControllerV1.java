@@ -20,16 +20,14 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/")
 public class MessageRestControllerV1 {
 
+    @Autowired
     private MessageService messageService;
-    private UserService userService;
-    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    public MessageRestControllerV1(MessageService messageService, UserService userService, JwtTokenProvider tokenProvider) {
-        this.messageService = messageService;
-        this.userService = userService;
-        this.tokenProvider = tokenProvider;
-    }
+    private UserService userService;
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
     // Get all messages between two users
     @GetMapping(value = "dialogs")
@@ -63,7 +61,7 @@ public class MessageRestControllerV1 {
 
     // Get dialogs previews
     @GetMapping(value = "dialogs/{userId}")
-    public ResponseEntity getDialofsPreviews(@PathVariable(name = "userId") Long id,
+    public ResponseEntity getDialogsPreviews(@PathVariable(name = "userId") Long id,
                                              @RequestHeader("Authorization") String token){
         User user = userService.findById(id);
         String username = tokenProvider.getUsername(token.trim().substring(7));
@@ -114,7 +112,9 @@ public class MessageRestControllerV1 {
 
     // Edit message by id
     @PutMapping(value = "messages/{id}")
-    public ResponseEntity editMessage(@PathVariable(name = "id") Long id, @RequestBody MessageRequestDto messageRequest, @RequestHeader("Authorization") String token){
+    public ResponseEntity editMessage(@PathVariable(name = "id") Long id,
+                                      @RequestBody MessageRequestDto messageRequest,
+                                      @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
         User sender = userService.findByUsername(username);
         User receiver = userService.findById(messageRequest.getReceiverId());

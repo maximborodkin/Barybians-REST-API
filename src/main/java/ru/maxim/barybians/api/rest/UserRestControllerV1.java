@@ -19,14 +19,11 @@ public class UserRestControllerV1 {
     @Value("${jwt.token.secret}")
     private String secret;
 
+    @Autowired
     private UserService userService;
-    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    public UserRestControllerV1(UserService userService, JwtTokenProvider tokenProvider) {
-        this.userService = userService;
-        this.tokenProvider = tokenProvider;
-    }
+    private JwtTokenProvider tokenProvider;
 
     // Get user by id or username
     @GetMapping(value = "users/{identifier}")

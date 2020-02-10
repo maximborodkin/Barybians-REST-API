@@ -19,18 +19,17 @@ import java.util.Date;
 @RequestMapping(value = "/api/v1/")
 public class CommentRestControllerV1 {
 
+    @Autowired
     private CommentService commentService;
-    private PostService postService;
-    private UserService userService;
-    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    public CommentRestControllerV1(CommentService commentService, PostService postService, UserService userService, JwtTokenProvider tokenProvider) {
-        this.commentService = commentService;
-        this.postService = postService;
-        this.userService = userService;
-        this.tokenProvider = tokenProvider;
-    }
+    private PostService postService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
     // Get comment by id
     @GetMapping(value = "comments/{id}")

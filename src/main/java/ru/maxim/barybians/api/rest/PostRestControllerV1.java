@@ -17,16 +17,14 @@ import java.util.Date;
 @RequestMapping(value = "/api/v1/")
 public class PostRestControllerV1 {
 
+    @Autowired
     private PostService postService;
-    private JwtTokenProvider tokenProvider;
-    private UserService userService;
 
     @Autowired
-    public PostRestControllerV1(PostService postService, JwtTokenProvider tokenProvider, UserService userService) {
-        this.postService = postService;
-        this.tokenProvider = tokenProvider;
-        this.userService = userService;
-    }
+    private JwtTokenProvider tokenProvider;
+
+    @Autowired
+    private UserService userService;
 
     // Get post by id
     @GetMapping(value = "posts/{id}")

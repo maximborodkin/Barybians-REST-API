@@ -26,16 +26,14 @@ import java.util.Map;
 @RequestMapping(value = "/api/v1/auth/")
 public class AuthenticationRestControllerV1 {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserService userService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthenticationRestControllerV1(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
-    }
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private UserService userService;
 
     // Get full UserDto object with token and authenticate user
     @PostMapping("login")
