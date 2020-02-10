@@ -1,6 +1,6 @@
 package ru.maxim.barybians.api.service;
 
-import javafx.util.Pair;
+import org.springframework.data.util.Pair;
 import ru.maxim.barybians.api.model.Message;
 import ru.maxim.barybians.api.model.User;
 

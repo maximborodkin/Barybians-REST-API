@@ -1,8 +1,8 @@
 package ru.maxim.barybians.api.service.impl;
 
-import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maxim.barybians.api.model.Message;
