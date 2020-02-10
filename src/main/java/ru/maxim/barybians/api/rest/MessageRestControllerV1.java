@@ -61,16 +61,15 @@ public class MessageRestControllerV1 {
     }
 
     // Get dialogs previews
-    @GetMapping(value = "dialogs/{userId}")
-    public ResponseEntity getDialogsPreviews(@PathVariable(name = "userId") Long id,
-                                             @RequestHeader("Authorization") String token){
-        User user = userService.findById(id);
+    @GetMapping(value = "dialogs_list")
+    public ResponseEntity getDialogsPreviews(@RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
+        User user = userService.findByUsername(username);
         if (!user.getUsername().equals(username)){
             return new ResponseEntity<>("Access Denied", HttpStatus.FORBIDDEN);
         }
         List<DialogDto> dialogPreviews = new ArrayList<>();
-        messageService.getDialogPreviews(id).forEach(preview -> {
+        messageService.getDialogPreviews(user.getId()).forEach(preview -> {
             dialogPreviews.add(DialogPreviewDto.toDialogPreview(user, preview.getInterlocutor(), preview.getLastMessage()));
         });
         return new ResponseEntity<>(dialogPreviews, HttpStatus.OK);

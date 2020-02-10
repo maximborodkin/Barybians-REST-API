@@ -2,7 +2,6 @@ package ru.maxim.barybians.api.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.maxim.barybians.api.model.DialogPreview;
@@ -26,22 +25,15 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getDialog(long firstUserId, long secondUserId) {
-        List<Message> dialog = new ArrayList<>();
-        List<Message> messages = messageRepository.findAll();
+        List<Message> messages = messageRepository.getDialog(firstUserId, secondUserId);
         messages.forEach(message -> {
-            if (message.getReceiver().getId() == firstUserId &&
-                    message.getSender().getId() == secondUserId ||
-                    message.getReceiver().getId() == secondUserId &&
-                    message.getSender().getId() == firstUserId){
-                dialog.add(message);
-                message.setUnread(0);
-                messageRepository.save(message);
-            }
+            message.setUnread(0);
+            messageRepository.save(message);
         });
-        Collections.reverse(messages);
-        return dialog;
+        return messages;
     }
 
+    // Вот это вообще полный ужас. Надо переделывать
     @Override
     public List<DialogPreview> getDialogPreviews(long userId) {
         User user;
@@ -87,8 +79,6 @@ public class MessageServiceImpl implements MessageService {
         });
         return dialogsPreviews;
     }
-
-
 
     @Override
     @Transactional

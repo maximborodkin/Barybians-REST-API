@@ -27,15 +27,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findCommentsByPostId(Long id) {
-        List<Comment> allComments = commentRepository.findAll();
-        List<Comment> postComments = new ArrayList<>();
-        allComments.forEach(comment -> {
-            if (comment.getPost().getId() == id){
-                postComments.add(comment);
-            }
-        });
-        Collections.reverse(postComments);
-        return postComments;
+        return commentRepository.findByPostId(id);
     }
 
     @Override

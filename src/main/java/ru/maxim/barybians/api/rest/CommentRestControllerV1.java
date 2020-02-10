@@ -13,7 +13,9 @@ import ru.maxim.barybians.api.service.CommentService;
 import ru.maxim.barybians.api.service.PostService;
 import ru.maxim.barybians.api.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/")
@@ -39,6 +41,19 @@ public class CommentRestControllerV1 {
             return new ResponseEntity<>(CommentDto.fromComment(comment, true, true), HttpStatus.OK);
         }else {
             return new ResponseEntity<>("Comment not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "posts/{id}/comments")
+    public ResponseEntity getCommentsByPostId(@PathVariable(name = "id") Long id){
+        if (postService.findById(id).isPresent()){
+            List<CommentDto> comments = new ArrayList<>();
+            commentService.findCommentsByPostId(id).forEach(comment -> {
+                comments.add(CommentDto.fromComment(comment, false, false));
+            });
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
         }
     }
 
