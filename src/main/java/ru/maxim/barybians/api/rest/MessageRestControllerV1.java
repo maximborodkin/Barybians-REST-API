@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.maxim.barybians.api.dto.DialogDto;
+import ru.maxim.barybians.api.dto.DialogPreviewDto;
 import ru.maxim.barybians.api.dto.MessageDto;
 import ru.maxim.barybians.api.dto.MessageRequestDto;
 import ru.maxim.barybians.api.model.Message;
@@ -70,7 +71,7 @@ public class MessageRestControllerV1 {
         }
         List<DialogDto> dialogPreviews = new ArrayList<>();
         messageService.getDialogPreviews(id).forEach(preview -> {
-            dialogPreviews.add(DialogDto.toDialog(user, preview.getKey(), preview.getValue()));
+            dialogPreviews.add(DialogPreviewDto.toDialogPreview(user, preview.getInterlocutor(), preview.getLastMessage()));
         });
         return new ResponseEntity<>(dialogPreviews, HttpStatus.OK);
     }

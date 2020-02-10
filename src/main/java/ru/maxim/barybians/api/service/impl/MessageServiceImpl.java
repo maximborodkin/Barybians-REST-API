@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.maxim.barybians.api.model.DialogPreview;
 import ru.maxim.barybians.api.model.Message;
 import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.repository.MessageRepository;
@@ -42,7 +43,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Pair<User, Message>> getDialogPreviews(long userId) {
+    public List<DialogPreview> getDialogPreviews(long userId) {
         User user;
         if (userRepository.findById(userId).isPresent()){
             user = userRepository.findById(userId).get();
@@ -73,7 +74,7 @@ public class MessageServiceImpl implements MessageService {
                 interlocutors.add(u);
             }
         });
-        List<Pair<User, Message>> messagesPreviews = new ArrayList<>();
+        List<DialogPreview> dialogsPreviews = new ArrayList<>();
         interlocutors.forEach(interlocutor -> {
             List<Message> interlocutorMessages = new ArrayList<>();
             allUserMessages.forEach(userMessage -> {
@@ -82,9 +83,9 @@ public class MessageServiceImpl implements MessageService {
                 }
                 Collections.sort(interlocutorMessages);
             });
-            messagesPreviews.add(new Pair<>(interlocutor, interlocutorMessages.get(interlocutorMessages.size()-1)));
+            dialogsPreviews.add(new DialogPreview(interlocutor, interlocutorMessages.get(interlocutorMessages.size()-1)));
         });
-        return messagesPreviews;
+        return dialogsPreviews;
     }
 
 
