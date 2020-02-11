@@ -33,52 +33,70 @@ public class MessageServiceImpl implements MessageService {
         return messages;
     }
 
-    // Вот это вообще полный ужас. Надо переделывать
     @Override
     public List<DialogPreview> getDialogPreviews(long userId) {
-        User user;
-        if (userRepository.findById(userId).isPresent()){
-            user = userRepository.findById(userId).get();
-        }else {
-            return null;
-        }
-        user.setLastVisit(new Date());
-        userRepository.save(user);
-        List<Message> allMessages = messageRepository.findAll();
-        List<Message> allUserMessages = new ArrayList<>();
-        allMessages.forEach(message -> {
-            if (message.getReceiver().getId() == userId || message.getSender().getId() == userId){
-                allUserMessages.add(message);
-            }
-        });
-        Set<Long> interlocutorsIdList = new HashSet<>();
-        allUserMessages.forEach(message -> {
-            if (message.getSender().getId() != userId){
-                interlocutorsIdList.add(message.getSender().getId());
-            }else {
-                interlocutorsIdList.add(message.getReceiver().getId());
-            }
-        });
-        List<User> allUsers = userRepository.findAll();
-        List<User> interlocutors = new ArrayList<>();
-        allUsers.forEach(u -> {
-            if (interlocutorsIdList.contains(u.getId())){
-                interlocutors.add(u);
-            }
-        });
-        List<DialogPreview> dialogsPreviews = new ArrayList<>();
-        interlocutors.forEach(interlocutor -> {
-            List<Message> interlocutorMessages = new ArrayList<>();
-            allUserMessages.forEach(userMessage -> {
-                if (userMessage.getSender() == interlocutor || userMessage.getReceiver() == interlocutor){
-                    interlocutorMessages.add(userMessage);
-                }
-                Collections.sort(interlocutorMessages);
+        List<DialogPreview> previews = new ArrayList<>();
+        if (userRepository.findById(userId).isPresent()) {
+            User user = userRepository.findById(userId).get();
+            user.setLastVisit(new Date());
+            userRepository.save(user);
+            messageRepository.getAllUserInterlocutors(userId).forEach(interlocutorId -> {
+                Message lastMessage = messageRepository.getLastMessageInDialog(userId, interlocutorId);
+                if (userRepository.findById(interlocutorId).isPresent())
+                    previews.add(new DialogPreview(userRepository.findById(interlocutorId).get(), lastMessage));
             });
-            dialogsPreviews.add(new DialogPreview(interlocutor, interlocutorMessages.get(interlocutorMessages.size()-1)));
-        });
-        return dialogsPreviews;
+            previews.sort(Comparator.comparing(o -> o.getLastMessage().getTime()));
+            return previews;
+        }
+        return null;
     }
+
+    // Старая версия
+//    @Override
+//    public List<DialogPreview> getDialogPreviews(long userId) {
+//        if (userRepository.findById(userId).isPresent()){
+//            User user = userRepository.findById(userId).get();
+//            user.setLastVisit(new Date());
+//            userRepository.save(user);
+//        }else {
+//            return null;
+//        }
+//
+//        List<Message> allMessages = messageRepository.findAll();
+//        List<Message> allUserMessages = new ArrayList<>();
+//        allMessages.forEach(message -> {
+//            if (message.getReceiver().getId() == userId || message.getSender().getId() == userId){
+//                allUserMessages.add(message);
+//            }
+//        });
+//        Set<Long> interlocutorsIdList = new HashSet<>();
+//        allUserMessages.forEach(message -> {
+//            if (message.getSender().getId() != userId){
+//                interlocutorsIdList.add(message.getSender().getId());
+//            }else {
+//                interlocutorsIdList.add(message.getReceiver().getId());
+//            }
+//        });
+//        List<User> allUsers = userRepository.findAll();
+//        List<User> interlocutors = new ArrayList<>();
+//        allUsers.forEach(u -> {
+//            if (interlocutorsIdList.contains(u.getId())){
+//                interlocutors.add(u);
+//            }
+//        });
+//        List<DialogPreview> dialogsPreviews = new ArrayList<>();
+//        interlocutors.forEach(interlocutor -> {
+//            List<Message> interlocutorMessages = new ArrayList<>();
+//            allUserMessages.forEach(userMessage -> {
+//                if (userMessage.getSender() == interlocutor || userMessage.getReceiver() == interlocutor){
+//                    interlocutorMessages.add(userMessage);
+//                }
+//                Collections.sort(interlocutorMessages);
+//            });
+//            dialogsPreviews.add(new DialogPreview(interlocutor, interlocutorMessages.get(interlocutorMessages.size()-1)));
+//        });
+//        return dialogsPreviews;
+//    }
 
     @Override
     @Transactional
