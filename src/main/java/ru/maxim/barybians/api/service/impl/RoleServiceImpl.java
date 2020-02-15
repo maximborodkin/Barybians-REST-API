@@ -13,12 +13,8 @@ import java.util.Optional;
 @Slf4j
 public class RoleServiceImpl implements RoleService {
 
-    private RoleRepository roleRepository;
-
     @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+    private RoleRepository roleRepository;
 
     @Override
     public List<Role> getAll() {

@@ -35,7 +35,7 @@ public class AuthenticationRestControllerV1 {
     @Autowired
     private UserService userService;
 
-    // Get full UserDto object with token and authenticate user
+    // Get user data with token and authenticate user
     @PostMapping("login")
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
@@ -50,7 +50,7 @@ public class AuthenticationRestControllerV1 {
             String token = jwtTokenProvider.createToken(username, user.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
-            response.put("user", UserDto.fromUser(userService.findByUsername(username), true, true, true));
+            response.put("user", UserDto.fromUser(userService.findByUsername(username), true, false, false));
             response.put("token", token);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -59,7 +59,7 @@ public class AuthenticationRestControllerV1 {
         }
     }
 
-    // Get full UserDto object with token and register user
+    // Get user data with token and register user
     @PostMapping(value = "register")
     public ResponseEntity registerUser(@RequestBody RegisterRequestDto requestDto){
         String firstName = requestDto.getFirstName();
