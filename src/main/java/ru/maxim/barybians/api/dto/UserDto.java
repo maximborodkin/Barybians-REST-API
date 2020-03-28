@@ -57,6 +57,7 @@ public class UserDto {
         userDto.setPhoto("https://barybians.site/avatars/"+user.getPhotoUrl());
         userDto.setStatus(user.getStatus());
         userDto.setSex(user.getSex());
+        userDto.setLastVisit(user.getLastVisit().getTime());
         userDto.setBirthDate(user.getBirthDate().getTime());
 
         if (hasRoles){

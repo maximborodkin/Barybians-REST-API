@@ -8,6 +8,7 @@ import ru.maxim.barybians.api.dto.DialogDto;
 import ru.maxim.barybians.api.dto.DialogPreviewDto;
 import ru.maxim.barybians.api.dto.MessageDto;
 import ru.maxim.barybians.api.dto.MessageRequestDto;
+import ru.maxim.barybians.api.model.DialogPreview;
 import ru.maxim.barybians.api.model.Message;
 import ru.maxim.barybians.api.model.User;
 import ru.maxim.barybians.api.security.jwt.JwtTokenProvider;
@@ -68,11 +69,14 @@ public class MessageRestControllerV1 {
         if (!user.getUsername().equals(username)){
             return new ResponseEntity<>("Access Denied", HttpStatus.FORBIDDEN);
         }
-        List<DialogDto> dialogPreviews = new ArrayList<>();
-        messageService.getDialogPreviews(user.getId()).forEach(preview -> {
-            dialogPreviews.add(DialogPreviewDto.toDialogPreview(user, preview.getInterlocutor(), preview.getLastMessage()));
-        });
-        return new ResponseEntity<>(dialogPreviews, HttpStatus.OK);
+        List<DialogPreviewDto> dialogPreviewsDto = new ArrayList<>();
+        List<DialogPreview> dialogPreviews = messageService.getDialogPreviews(user.getId());
+            if (dialogPreviews != null){
+                for (DialogPreview preview: dialogPreviews) {
+                    dialogPreviewsDto.add(DialogPreviewDto.fromDialogPreview(user, preview.getInterlocutor(), preview.getLastMessage()));
+                }
+            }
+        return new ResponseEntity<>(dialogPreviewsDto, HttpStatus.OK);
     }
 
     // Create message

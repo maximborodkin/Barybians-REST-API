@@ -58,6 +58,11 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
+    @Override
+    public String toString(){
+        return getId()+": "+getFirstName()+" "+getLastName();
+    }
+
     public String concatToSearchString(){
         return username.toLowerCase() + firstName.toLowerCase() + lastName.toLowerCase();
     }

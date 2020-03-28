@@ -3,6 +3,7 @@ package ru.maxim.barybians.api.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.maxim.barybians.api.dto.UserDto;
@@ -56,7 +57,7 @@ public class UserRestControllerV1 {
         if (user == null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        if (tokenProvider.getUsername(token.trim().substring(7)).equals(user.getUsername())){
+        if (!tokenProvider.getUsername(token.trim().substring(7)).equals(user.getUsername())){
             return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
         }
         userService.delete(user.getId());

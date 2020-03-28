@@ -31,6 +31,11 @@ public class Message extends BaseEntity implements Comparable<Message>{
         return Long.compare(time.getTime(), other.getTime().getTime());
     }
 
+    @Override
+    public String toString(){
+        return getId()+": "+getReceiver()+" "+getSender()+" "+getTime();
+    }
+
     public String toJsonString() {
         return "{\"id\":" + getId()
                 + ",\"senderId\":" + getSender().getId()

@@ -41,9 +41,11 @@ public class MessageServiceImpl implements MessageService {
             user.setLastVisit(new Date());
             userRepository.save(user);
             messageRepository.getAllUserInterlocutors(userId).forEach(interlocutorId -> {
-                Message lastMessage = messageRepository.getLastMessageInDialog(userId, interlocutorId);
-                if (userRepository.findById(interlocutorId).isPresent())
-                    previews.add(new DialogPreview(userRepository.findById(interlocutorId).get(), lastMessage));
+                if (userRepository.findById(interlocutorId).isPresent()) {
+                    User interlocutor = userRepository.findById(interlocutorId).get();
+                    Message lastMessage = messageRepository.getLastMessageInDialog(userId, interlocutor.getId());
+                    previews.add(new DialogPreview(interlocutor, lastMessage));
+                }
             });
             previews.sort(Comparator.comparing(o -> o.getLastMessage().getTime()));
             return previews;

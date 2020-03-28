@@ -18,6 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
+    private static final String DELETE_ENDPOINT = "/api/v1/users/delete/**";
 
     @Bean
     @Override
@@ -35,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers(LOGIN_ENDPOINT).permitAll()
             .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-//                .anyRequest().authenticated()
+            .antMatchers(DELETE_ENDPOINT).hasRole("ADMIN")
+            .anyRequest().authenticated()
             .and()
             .apply(new JwtConfigurer(jwtTokenProvider));
     }

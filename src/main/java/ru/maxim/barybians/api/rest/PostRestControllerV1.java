@@ -2,6 +2,7 @@ package ru.maxim.barybians.api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.maxim.barybians.api.dto.PostDto;
@@ -38,7 +39,7 @@ public class PostRestControllerV1 {
     }
 
     // Create post
-    @PostMapping(value = "posts")
+    @PostMapping(value = "posts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity addPost(@RequestBody PostRequestDto postRequest,
                                   @RequestHeader("Authorization") String token){
         String username = tokenProvider.getUsername(token.trim().substring(7));
@@ -86,6 +87,7 @@ public class PostRestControllerV1 {
             return new ResponseEntity<>("Invalid request data", HttpStatus.BAD_REQUEST);
         }
         Post post = new Post();
+        post.setId(id);
         post.setUser(user);
         post.setTitle(title);
         post.setText(text);
