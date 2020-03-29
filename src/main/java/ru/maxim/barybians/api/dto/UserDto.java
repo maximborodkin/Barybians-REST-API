@@ -54,7 +54,7 @@ public class UserDto {
         userDto.setUsername(user.getUsername());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
-        userDto.setPhoto("https://barybians.site/avatars/"+user.getPhotoUrl());
+        userDto.setPhoto(user.getPhotoUrl());
         userDto.setStatus(user.getStatus());
         userDto.setSex(user.getSex());
         userDto.setLastVisit(user.getLastVisit().getTime());

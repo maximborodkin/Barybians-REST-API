@@ -50,7 +50,7 @@ public class PostRestControllerV1 {
         String title = postRequest.getTitle();
         String text = postRequest.getText();
         Date time = new Date();
-        if (title == null || title.isEmpty() || text == null || text.isEmpty() || time.after(new Date())){
+        if (text == null || text.isEmpty() || time.after(new Date())){
             return new ResponseEntity<>("Invalid request data", HttpStatus.BAD_REQUEST);
         }
         Post post = new Post();

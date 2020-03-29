@@ -57,7 +57,7 @@ public class PostDto implements Comparable<PostDto>{
         }else {
             postDto.setLikesCount(post.getLikes().size());
         }
-        if (hasLikedUsers) {
+        if (post.getLikes() != null) { //hasLikedUsers
             List<UserDto> likedUsers = new ArrayList<>();
             post.getLikes().forEach(user -> likedUsers.add(UserDto.fromUser(user, false, false, false)));
             postDto.setLikedUsers(likedUsers);
