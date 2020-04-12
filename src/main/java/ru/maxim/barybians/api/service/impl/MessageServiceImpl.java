@@ -27,7 +27,9 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> getDialog(long firstUserId, long secondUserId) {
         List<Message> messages = messageRepository.getDialog(firstUserId, secondUserId);
         messages.forEach(message -> {
-            message.setUnread(0);
+           if (message.getSender().getId() != firstUserId){
+             message.setUnread(0);   
+            }
             messageRepository.save(message);
         });
         return messages;
